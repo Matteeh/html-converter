@@ -31,4 +31,4 @@ Deployment script coming soon
 
 ## Authors
 
-* **Mathias Rahikainen** - *Initial work* - [Matteeh](https://github.com/matteeh)
+* **Mathias Rahikainen** - [Matteeh](https://github.com/matteeh)
