@@ -1,3 +1,7 @@
+export type PhantomConverter = (options: PhantomLocalOptions, callback: PhantomConverterCB) => {};
+
+export type PhantomConverterCB = (err, pdf) => void;
+
 export interface PhantomGlobalOptions {
   /* number of allocated phantomjs processes */
   numberOfWorkers?: number;
