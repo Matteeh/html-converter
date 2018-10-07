@@ -1,8 +1,12 @@
 import { app } from "./app";
+import { errorHandler, logErrors } from "./error/error";
+
 
 /**
  * Error handling here
  */
+app.use(logErrors);
+app.use(errorHandler);
 
 
 /**

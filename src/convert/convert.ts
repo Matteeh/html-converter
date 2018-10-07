@@ -5,7 +5,6 @@ const conversion = require("phantom-html-to-pdf");
 
 
 const converter: PhantomConverter = _createConverter();
-console.log(converter);
 
 /**
  * Convert a requested job
