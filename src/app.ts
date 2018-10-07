@@ -5,10 +5,10 @@ import { router as convert } from './convert';
 // Create Express server
 const app = express();
 
-const API = process.env.API_URL;
+const API_URI = process.env.API_URI;
 
 // Express configuration
-app.set("port", process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * Primary app api routes
  */
-app.use(API + '/convert', convert);
+app.use(API_URI + '/convert', convert);
 
 /**
  * Health check
