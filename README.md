@@ -30,10 +30,10 @@ touch .env
 
 | Npm Script | Description |
 | ------------------------- | ------------------------------------------------------------------------------------------------- |
-| `start`                   | Starts the application in production mode                                                         | 
-| `build`                   | Runs clean then it runs build tasks                                                               |
-| `serve`                   | Starts app by running build:run in watch mode with nodemon                                        |
-| `build:run`               | Runs build but then it also starts the app in development mode                                    |
+| `start`                   | Start the application in production mode                                                          |
+| `serve`                   | Start watching app in development mode                                                            |
+| `build`                   | Run clean then run build tasks                                                                    |
+| `build:run`               | Run build then start the app in development mode                                                  |
 | `test`                    | Coming soon                                                                                       |
 | `watch-test`              | Coming soon                                                                                       |
 | `clean`                   | Deletes dist folder                                                                               |
