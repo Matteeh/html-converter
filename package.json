@@ -6,10 +6,10 @@
   "scripts": {
     "start": "export NODE_ENV=production node && -r dotenv/config ./dist/src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon -e ts,json -w src -x 'npm run compile:run'",
-    "compile:run": "npm run clean && tsc && npm run run",
+    "serve": "nodemon -e ts,json -w src -x 'npm run build:run'",
     "run": "export NODE_ENV=development && node -r dotenv/config ./dist/src/server.js",
     "build": "npm run clean && tsc",
+    "build:run": "npm run clean && tsc && npm run run",
     "clean": "rimraf ./dist"
   },
   "author": "Mathias Rahikainen",
