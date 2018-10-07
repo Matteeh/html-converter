@@ -3,7 +3,7 @@ import { errorHandler, logErrors } from './error';
 
 
 /**
- * Error handling here
+ * Error handling
  */
 app.use(logErrors);
 app.use(errorHandler);

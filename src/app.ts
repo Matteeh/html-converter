@@ -1,4 +1,5 @@
 import express from 'express';
+import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
 
 import { router as convert } from './convert';
@@ -16,14 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 /**
- * Primary app api routes
+ * App primary API routes
  */
 app.use(API_URI + '/convert', convert);
 
 /**
  * Health check
  */
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     res.send({ status:'Live', apiVersion: '1' });
 });
 
