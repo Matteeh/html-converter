@@ -1,6 +1,6 @@
 # Html-pdf-converter
 
-This is a Node.js (express) rest api server that implements phantom-html-to-pdf converter.
+This is a Node.js (express) REST API server that converts html to pdf with phantom-html-to-pdf.
 
 ## Pre-reqs
 

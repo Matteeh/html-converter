@@ -21,7 +21,7 @@ export class CustomError extends Error {
 }
 
 /**
- * Logs error stack and message.
+ * Logs error stack and message
  */
 export function logErrors (err: CustomError, req: Request, res: Response, next: NextFunction): void {
     console.error(err.stack);
