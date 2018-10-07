@@ -23,7 +23,7 @@ app.use(API_URI + '/convert', convert);
  * Health check
  */
 app.get('/', (req, res) => {
-    res.send('App ready.');
+    res.send({ status:'Live', apiVersion: '1' });
 });
 
 export { app };
