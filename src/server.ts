@@ -1,5 +1,5 @@
-import { app } from "./app";
-import { errorHandler, logErrors } from "./error/error";
+import { app } from './app';
+import { errorHandler, logErrors } from './error';
 
 
 /**

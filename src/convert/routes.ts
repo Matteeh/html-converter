@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
-import { Response, Request, NextFunction } from "express";
+import { Response, Request, NextFunction } from 'express';
 import { convert } from './convert';
+import { CustomError } from '../error';
 
 export const router: Router = express.Router();
 
@@ -10,5 +11,5 @@ export const router: Router = express.Router();
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
     convert({url: 'https://github.com/pofider/phantom-html-to-pdf'})
     .then(pdfStream => pdfStream.pipe(res))
-    .catch(err => next(err));
+    .catch(err => next(new CustomError(500, err.message)));
 });

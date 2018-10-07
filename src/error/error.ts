@@ -1,16 +1,22 @@
-import { Response, Request, NextFunction } from "express";
+import { Response, Request, NextFunction } from 'express';
 
-class CustomError extends Error {
+/**
+ * Extends Error with statusCode property
+ * @param statusCode HTTP status code
+ * @param params Error arguments
+ */
+export class CustomError extends Error {
     statusCode: number;
-    constructor(statusCode?: number) {
-        super();
+    constructor(statusCode: number, ...params) {
+        // Pass remaining arguments (including vendor specific ones) to parent constructor
+        super(...params);
 
     // Maintain proper stack trace
     if (Error.captureStackTrace) {
         Error.captureStackTrace(this, CustomError);
       }
       // Default error status 500
-      this.statusCode = statusCode || 500;
+      this.statusCode = statusCode;
     }
 }
 
@@ -19,7 +25,7 @@ class CustomError extends Error {
  */
 export function logErrors (err: CustomError, req: Request, res: Response, next: NextFunction): void {
     console.error(err.stack);
-    console.error(err.message);
+    console.error('Error Message: ', err.message);
     next(err);
   }
 
@@ -31,6 +37,6 @@ export function errorHandler(err: CustomError, req: Request, res: Response, next
     if (res.headersSent) {
         return next(err);
       }
-      const customErr = new CustomError(err.statusCode);
+      const customErr = err.statusCode ? err : new CustomError(500, err);
       res.status(customErr.statusCode).send({ error: customErr.message });
 }
