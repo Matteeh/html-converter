@@ -31,7 +31,7 @@ touch .env
 | Npm Script | Description |
 | ------------------------- | ------------------------------------------------------------------------------------------------- |
 | `start`                   | Start the application in production mode                                                          |
-| `serve`                   | Start watching app in development mode                                                            |
+| `serve`                   | Start watching the app in development mode                                                        |
 | `build`                   | Run clean then run build tasks                                                                    |
 | `build:run`               | Run build then start the app in development mode                                                  |
 | `test`                    | Coming soon                                                                                       |
