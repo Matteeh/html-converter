@@ -5,6 +5,7 @@ import { router as convert } from './convert';
 // Create Express server
 const app = express();
 
+// Get api URI from environment variable
 const API_URI = process.env.API_URI;
 
 // Express configuration
