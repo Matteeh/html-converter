@@ -5,7 +5,7 @@ import { firestoreRetryStrategy } from "./helpers";
 const Firestore = require('@google-cloud/firestore');
 
 const projectId =  process.env.GOOGLE_PROJECT_ID;
-const keyFilename = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+const keyFilename = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 // Create a client
 const firestore = new Firestore({
     projectId,

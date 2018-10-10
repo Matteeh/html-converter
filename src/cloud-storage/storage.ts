@@ -1,30 +1,26 @@
 import { from, of, Observable } from 'rxjs';
 import { mapTo, catchError } from 'rxjs/operators';
+import { PassThrough } from 'stream';
+import { fromStream } from '../util/rxjs';
 
 const Storage = require('@google-cloud/storage');
 
 const projectId =  process.env.GOOGLE_PROJECT_ID;
-const bucketName = process.env.GOOGLE_HTML_TEMP_BUCKET;
 
 // Creates a refrence to the bucket
-const bucket = new Storage({ projectId }).bucket(bucketName);
-
-/**
- * Make the bucket and its contents private
- */
-bucket.makePrivate({ includeFiles: true }, (err) => {});
+export function getBucketRef(name) {
+    return new Storage({ projectId }).bucket(name);
+}
 
 /**
  * Upload a file to the bucket
  * @param file 
  */
 export function upload(file): Observable<boolean> {
-    return from(bucket.upload(file, {
-        gzip:true,
-        metadata: { 
-            cacheControl:'public, max-age=31536000'
-        }
-    })).pipe(
+    const dataStream = new PassThrough();
+    const args = { gzip:true, metadata: { cacheControl:'public, max-age=31536000' } };
+    return fromStream(dataStream.pipe(file.createWriteStream(args)))
+    .pipe(
         mapTo(true),
         catchError(err => of(err))
     );
@@ -34,7 +30,7 @@ export function upload(file): Observable<boolean> {
  * Delet a file from the bucket
  * @param file 
  */
-export function del(file): Observable<boolean> {
+export function del(bucket, file): Observable<boolean> {
     return from(bucket
         .file(file)
         .delete(file))
@@ -43,3 +39,5 @@ export function del(file): Observable<boolean> {
         catchError(err => of(err))
     );
 }
+
+
