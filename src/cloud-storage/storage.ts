@@ -7,14 +7,14 @@ const Storage = require('@google-cloud/storage');
 
 const projectId =  process.env.GOOGLE_PROJECT_ID;
 
-// Creates a refrence to the bucket
+// Creates a refrence to 'name' bucket
 export function getBucketRef(name) {
     return new Storage({ projectId }).bucket(name);
 }
 
 /**
  * Upload a file to specified bucket
- * @param file 
+ * @param file bucket.file
  */
 export function upload(file): Observable<boolean> {
     const dataStream = new PassThrough();
@@ -28,12 +28,10 @@ export function upload(file): Observable<boolean> {
 
 /**
  * Delete a file from specified bucket
- * @param file 
+ * @param file bucket.file
  */
-export function del(bucket, file): Observable<boolean> {
-    return from(bucket
-        .file(file)
-        .delete(file))
+export function del(file): Observable<boolean> {
+    return from(file.delete(file))
     .pipe(
         mapTo(true),
         catchError(err => of(err))
