@@ -2,7 +2,7 @@ import express from 'express';
 import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
 
-import { router as convert } from './convert';
+import { router as conversion } from './conversion';
 // Create Express server
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * App primary API routes
  */
-app.use(API_URI + '/convert', convert);
+app.use(API_URI + '/conversions', conversion);
 
 /**
  * Health check
