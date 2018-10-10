@@ -1,4 +1,4 @@
-# Html-pdf-converter
+# Html converter
 
 This is a Node.js (express) REST API server that converts html to pdf or png.
 
