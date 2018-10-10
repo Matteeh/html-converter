@@ -13,7 +13,7 @@ export function getBucketRef(name) {
 }
 
 /**
- * Upload a file to the bucket
+ * Upload a file to specified bucket
  * @param file 
  */
 export function upload(file): Observable<boolean> {
@@ -27,7 +27,7 @@ export function upload(file): Observable<boolean> {
 }
 
 /**
- * Delet a file from the bucket
+ * Delete a file from specified bucket
  * @param file 
  */
 export function del(bucket, file): Observable<boolean> {
