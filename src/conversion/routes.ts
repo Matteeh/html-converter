@@ -3,6 +3,7 @@ import { Response, Request, NextFunction } from 'express';
 import { convert, newConversion } from './conversion';
 import { CustomError } from '../error';
 import { PhantomLocalOptions } from '../../models';
+import { PdfConversion } from 'conversion';
 
 export const router: Router = express.Router();
 
@@ -19,8 +20,9 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
  * @return jobId an identifier for the job
  */
 router.post('/pdf', (req: Request, res: Response, next: NextFunction) => {
-    const data = req.body.data;
-    newConversion(data);
+    const job: PdfConversion = req.body;
+    newConversion(job);
+    res.send({message: 'Queuing job'});
 });
 
 /**
