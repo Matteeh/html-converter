@@ -45,7 +45,7 @@ Run the application
 npm run serve
 ```
 
-### Runing tests
+### Running tests
 
 Coming soon, no tests written at this stage
 
