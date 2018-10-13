@@ -1,11 +1,20 @@
 import *  as puppeteer from 'puppeteer';
-import { from, Observable } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { map, switchMap, concatMap } from 'rxjs/operators';
+import { PdfConversion } from 'conversion';
 
 const browser = launchBrowser();
 
-export function newConversion(job) {
-    if (!job.url) {
+export function newConversion(job: PdfConversion) {
+    if (!job.input || (!job.input.html && !job.input.url) ) {
+        const missingProp = job.input ? job.input.html ? 'html' : 'url' : 'input';
+        return throwError(`ReferenceError: ${missingProp} is not defined`);
+    }
+    if (!job.input.url) {
+        const html = job.input.html;
+        Object.keys(html).forEach(key => {
+            // Need client id for file routes in bucket
+        });
         // upload to cloud storage and get link
     }
     // save link in firestore

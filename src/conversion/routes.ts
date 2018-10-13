@@ -20,8 +20,10 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
  * @return jobId an identifier for the job
  */
 router.post('/pdf', (req: Request, res: Response, next: NextFunction) => {
-    const job: PdfConversion = req.body;
-    newConversion(job);
+    if (!req.body) {
+        next(new CustomError(400, 'ReferenceError: body is not defined'));
+    }
+    newConversion(req.body);
     res.send({message: 'Queuing job'});
 });
 

@@ -14,12 +14,12 @@ export function getBucketRef(name) {
 
 /**
  * Upload a file to specified bucket
- * @param file bucket.file
+ * @param filename bucket.file
  */
-export function upload(file): Observable<boolean> {
+export function upload(filename): Observable<boolean> {
     const dataStream = new PassThrough();
     const args = { gzip:true, metadata: { cacheControl:'public, max-age=31536000' } };
-    return fromStream(dataStream.pipe(file.createWriteStream(args)))
+    return fromStream(dataStream.pipe(filename.createWriteStream(args)))
     .pipe(
         mapTo(true),
         catchError(err => of(err))
@@ -28,10 +28,10 @@ export function upload(file): Observable<boolean> {
 
 /**
  * Delete a file from specified bucket
- * @param file bucket.file
+ * @param filename bucket.file
  */
-export function del(file): Observable<boolean> {
-    return from(file.delete(file))
+export function del(filename): Observable<boolean> {
+    return from(filename.delete(filename))
     .pipe(
         mapTo(true),
         catchError(err => of(err))
