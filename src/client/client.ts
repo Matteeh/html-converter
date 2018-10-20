@@ -1,5 +1,6 @@
 import * as db from '../database';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 const clientsRef = db.getCollectionRef('clients');
 
@@ -17,8 +18,8 @@ export function addClient(clientId, data): Observable<boolean> {
  * Look for client in clients collection
  * @param clientId 
  */
-export function findClient(clientId): Observable<boolean> {
-    return db.findDoc(clientId);
+export function findClient(clientId): Observable<any> {
+    return db.findDoc(clientsRef, clientId);
 }
 
 /**

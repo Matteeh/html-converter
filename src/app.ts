@@ -3,6 +3,7 @@ import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
 
 import { router as conversion } from './conversion';
+import { router as auth } from './auth';
 // Create Express server
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * App primary API routes
  */
-app.use(API_URI + '/auth')
+app.use(API_URI + '/auth', auth);
 app.use(API_URI + '/conversions', conversion);
 
 /**

@@ -6,26 +6,28 @@ import { Observable, throwError, of, from, combineLatest } from 'rxjs';
 import { CustomError } from '../error';
 import { findClient, addClient } from '../client';
 import { concatMap, map } from 'rxjs/operators';
+import { ClientRequest } from '../types/authentication';
 
 
 /**
  * Setup a new client
  * @param obj grantType, clientId, clientSecret
  */
-export function newClient({ grantType = null, clientId = null, clientSecret = null }): Observable<any> {
-    if(!grantType || !clientId || !clientSecret) {
-        const missingProp = grantType ? clientId ? 'clientSecret' : 'clientId' : 'grantType';
+export function newClient({ grantType = null, id = null, secret = null }: ClientRequest): Observable<any> {
+    if(!grantType || !id || !secret) {
+        const missingProp = grantType ? id ? 'clientSecret' : 'clientId' : 'grantType';
         return throwError(new CustomError(400, `ReferenceError: ${missingProp} is not defined`));
     }
-    return findClient(clientId).pipe(
-        concatMap(isTaken => isTaken ? 
-            throwError(new CustomError(422, `${clientId} is already taken`)) :
-            hashSecret(clientSecret)
+    if(!grantTypeValidator) {
+        return throwError(new CustomError(400, 'grant_type must contain a value of: client_credentials'));
+    }
+    return findClient(id).pipe(
+        concatMap(exists => exists ? 
+            throwError(new CustomError(422, `${id} already exists`)) :
+            hashSecret(secret)
         ),
-        concatMap(hashedSecret  =>  combineLatest(
-            addClient(clientId, { secret: hashedSecret }),
-            createXtoken(clientId, hashedSecret)) ),
-        map(([success, token]) => success ? token : false)
+        concatMap(hashedSecret => addClient(id, { secret: hashedSecret })),
+        map(success => success ? createXtoken(id) : false)
     );
 }
 
@@ -34,7 +36,7 @@ export function newClient({ grantType = null, clientId = null, clientSecret = nu
  * @param clientId 
  * @param clientSecret 
  */
-export function createXtoken(clientId, clientSecret) {
+export function createXtoken(clientId): string {
     const options: jwt.SignOptions = {
         // HS256, because we have control over who uses the secret keys
         algorithm: 'HS256',
@@ -52,5 +54,11 @@ export function createXtoken(clientId, clientSecret) {
  */
 export function hashSecret(secret: string): Observable<string> {
     const saltRounds = process.env.SALT_ROUNDS;
-    return from(bcrypt.hash(secret, saltRounds));
+    return from(bcrypt.hash(secret, parseInt(saltRounds, 10)));
+}
+
+export function grantTypeValidator(str) {
+    // As defined in the OAuth 2.0 specification,
+    // this field must contain a value of client_credentials
+    return str.trim() === 'client_credentials' ;
 }

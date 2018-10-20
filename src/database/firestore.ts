@@ -1,5 +1,5 @@
 import { from, Observable } from "rxjs";
-import { mapTo, retryWhen, map } from "rxjs/operators";
+import { mapTo, retryWhen, map, tap } from "rxjs/operators";
 import { firestoreRetryStrategy } from "./helpers";
 
 const Firestore = require('@google-cloud/firestore');
@@ -12,6 +12,8 @@ const db = new Firestore({
     keyFilename
   });
 
+const settings = { timestampsInSnapshots: true };
+db.settings(settings);
 /**
  * Get refrence to specified firestore collection
  * if collection missing it will be created on the fly 
@@ -21,9 +23,9 @@ export function getCollectionRef(collection: string) {
     return db.collection(collection);
 }
 
-export function findDoc(doc): Observable<boolean> {
-    return from(doc.get()).pipe(
-        map(({exists = null}) => exists),
+export function findDoc(collRef, id): Observable<boolean> {
+    return from(collRef.doc(id).get()).pipe(
+        map(({ exists = null }) => exists),
     );
 }
 
