@@ -24,9 +24,7 @@ export function getCollectionRef(collection: string) {
 }
 
 export function findDoc(collRef, id): Observable<boolean> {
-    return from(collRef.doc(id).get()).pipe(
-        map(({ exists = null }) => exists),
-    );
+    return from(collRef.where('id', '==', id).get());
 }
 
 /**

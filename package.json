@@ -32,6 +32,7 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
+    "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "puppeteer": "^1.9.0",
     "rxjs": "^6.3.3",

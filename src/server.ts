@@ -9,6 +9,9 @@ app.use(logErrors);
 app.use(errorHandler);
 
 
+// Express server configuration
+app.set('port', process.env.PORT || 3000);
+
 /**
  * Start Express server
  */

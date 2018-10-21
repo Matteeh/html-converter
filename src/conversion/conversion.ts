@@ -5,13 +5,12 @@ import { PdfConversion } from 'conversion';
 
 const browser = launchBrowser();
 
-export function newConversion(job: PdfConversion) {
-    if (!job.input || (!job.input.html && !job.input.url) ) {
-        const missingProp = job.input ? job.input.html ? 'html' : 'url' : 'input';
+export function newConversion(guid, { input: { html, url } }: PdfConversion) {
+    if (!html && !url) {
+        const missingProp = html ? 'html' : 'url';
         return throwError(`ReferenceError: ${missingProp} is not defined`);
     }
-    if (!job.input.url) {
-        const html = job.input.html;
+    if (!url) {
         Object.keys(html).forEach(key => {
             // Need client id for file routes in bucket
         });
